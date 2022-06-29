@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: serving.knative.dev/v1
+metadata:
+  name: server-reply
+spec:
+  template:
+    spec:
+      containers:
+        - image: res-cpe-team-docker-local.artifactory.swg-devops.com/quarkus/server-reply:jvm 
+          name: benchmark
+          env:
+            - name: TYPE
+              value: "printRetValTypeD"
+            - name: JAVA_OPTIONS
+              valueFrom:
+                configMapKeyRef:
+                  name: java-env
+                  key: JAVA_OPTIONS

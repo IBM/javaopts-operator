@@ -1,0 +1,14 @@
+apiVersion: cpe.benchmark.io/v1alpha1
+kind: JavaOpts
+metadata:
+  name: javaopts-sample
+  namespace: default
+spec:
+  namespace: default
+  defaultOpts: "-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager -XshowSettings:vm -verbose:gc -Xlog:gc*:stderr -XX:+HeapDumpOnOutOfMemoryError -XX:+PrintClassHistogram"
+  configMapName: "java-env"
+  maxHeapSize: "-Xmx256m"
+  gcType: "-XX:+UseParallelGC"
+  logCmd: "kubectl get po"
+  getCmd: "echo 'Hello'"
+  # TODO(user): Add fields here

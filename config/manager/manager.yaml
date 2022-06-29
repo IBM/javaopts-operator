@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    control-plane: jvmopts-operator
+  name: jvmopts-operator 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jvmopts-operator
+  namespace: jvmopts-operator
+  labels:
+    control-plane: jvmopts-operator
+spec:
+  selector:
+    matchLabels:
+      control-plane: jvmopts-operator
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: manager
+      labels:
+        control-plane: jvmopts-operator
+    spec:
+      securityContext:
+        runAsNonRoot: true
+      containers:
+      - command:
+        - /manager
+        args:
+        - --leader-elect
+        image: res-cpe-team-docker-local.artifactory.swg-devops.com/jvmopts-operator:latest
+        name: manager
+        securityContext:
+          allowPrivilegeEscalation: false
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        # TODO(user): Configure the resources accordingly based on the project requirements.
+        # More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+        resources:
+          limits:
+            cpu: 500m
+            memory: 128Mi
+          requests:
+            cpu: 10m
+            memory: 64Mi
+      serviceAccountName: jvmopts-operator
+      terminationGracePeriodSeconds: 10

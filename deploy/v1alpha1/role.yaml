@@ -1,0 +1,32 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: jvmopts-operator 
+rules:
+- apiGroups:
+  - cpe.benchmark.io
+  resources:
+  - javaopts
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - cpe.benchmark.io
+  resources:
+  - javaopts/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - cpe.benchmark.io
+  resources:
+  - javaopts/status
+  verbs:
+  - get
+  - patch
+  - update

@@ -1,0 +1,32 @@
+apiVersion: cpe.cogadvisor.io/v1
+kind: Benchmark 
+metadata:
+  name: knative-sleep-driver
+  namespace: default
+spec:
+  benchmarkOperator:
+    name: jvmopts
+  benchmarkSpec: |
+    configMapName: "java-env"
+    driverImage: res-cpe-team-docker-local.artifactory.swg-devops.com/quarkus/driver:latest
+    revName: "sleep-00001"
+    defaultOpts: "-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager -Xlog:gc*:stderr"
+    command: "curl -v http://broker-ingress.knative-eventing.svc.cluster.local/default/default -X POST -H \'Ce-Id: test\' -H \'Ce-source: curl\' -H \'Ce-Specversion: 1.0\' -H \'Ce-Type: sleep\' -H \'Content-Type: application/json\' -d \'\"small\"\'; sleep 120 "
+  iterationSpec:
+    iterations:
+      - name: xmx
+        location: ".maxHeapSize"
+        values:
+        - "-Xmx128m"
+        - "-Xmx256m"
+        - "-Xmx512m"
+        - "-Xmx1G"
+      - name: gc
+        location: ".gcType"
+        values:
+        - "-XX:+UseSerialGC"
+        - "-XX:+UseParallelGC -XX:ParallelGCThreads=4"
+        - "-XX:+UseParallelGC"
+        - "-XX:+UseG1GC -XX:ParallelGCThreads=2 -XX:ConcGCThreads=2"
+        - "-XX:+UseG1GC"
+    sequential: true

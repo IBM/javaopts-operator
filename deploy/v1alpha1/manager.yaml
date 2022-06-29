@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jvmopts-operator
+  namespace: jvmopts-operator 
+  labels:
+    app: jvmopts-operator
+spec:
+  selector:
+    matchLabels:
+      app: jvmopts-operator
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: manager
+      labels:
+        app: jvmopts-operator
+    spec:
+      securityContext:
+        runAsNonRoot: true
+      containers:
+      - command:
+        - /manager
+        image: res-cpe-team-docker-local.artifactory.swg-devops.com/jvmopts-operator/jvmopts-operator:latest
+        name: manager
+      imagePullSecrets:
+      - name: res-cpe-team-docker-local
+      serviceAccountName: jvmopts-operator
+      terminationGracePeriodSeconds: 10

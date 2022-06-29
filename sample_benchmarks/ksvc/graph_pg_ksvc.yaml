@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: serving.knative.dev/v1
+metadata:
+  name: graph-pagerank
+spec:
+  template:
+    spec:
+      containers:
+        - image: res-cpe-team-docker-local.artifactory.swg-devops.com/quarkus/graph-pagerank:jvm 
+          name: benchmark
+          env:
+            - name: TYPE
+              value: "printRetValTypeU"
+            - name: JAVA_OPTS_APPEND 
+              valueFrom:
+                configMapKeyRef:
+                  name: pg-java-env
+                  key: JAVA_OPTIONS

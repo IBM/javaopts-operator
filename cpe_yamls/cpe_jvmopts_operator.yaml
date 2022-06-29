@@ -1,0 +1,25 @@
+apiVersion: cpe.cogadvisor.io/v1
+kind: BenchmarkOperator
+metadata:
+  name: jvmopts
+spec:
+  apiVersion: cpe.benchmark.io/v1alpha1
+  kind: JavaOpts
+  crd:
+    host: https://ibm.box.com/shared/static/ 
+    paths:
+    - zp69yg03g72lcuwvbwo0m0wnbgun78bp.yaml 
+  deploySpec:
+    namespace: jvmopts-operator
+    yaml:
+      host: https://ibm.box.com/shared/static/ 
+      paths:
+      - thxx6rsq0bheib3f64oqy0w9v04tv9ru.yaml 
+      - 1qpmhqx7c9qq2uzx4ecdttjgzrq6o9i8.yaml
+      - cyc2mu8wsfl7zwf2ytcwgx009nc58l2b.yaml 
+      - n6l7id7jfpcky0kl5dsq1w1cpfk8pf2m.yaml
+      - uc8yj2h7usqkbk2ecdxhoxrbq25dspfz.yaml 
+      - 52lgcpqdauf7cttor3cmksldwebtapwg.yaml
+      - z9njlj86ylh463np8dp8kt8y20vxid40.yaml
+      - qt4h2egciq806vxoi4uan5dm6zeurh7w.yaml
+      - vond1rfb70ze9yb84stv72vnsqn29mx8.yaml

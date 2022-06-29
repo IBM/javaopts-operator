@@ -1,0 +1,24 @@
+# permissions for end users to edit javaopts.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: javaopts-editor-role
+rules:
+- apiGroups:
+  - cpe.benchmark.io
+  resources:
+  - javaopts
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - cpe.benchmark.io
+  resources:
+  - javaopts/status
+  verbs:
+  - get
